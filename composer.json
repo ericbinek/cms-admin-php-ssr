@@ -1,0 +1,23 @@
+{
+    "name": "cms/cms-admin-php-ssr",
+    "description": "Server-rendered, login-protected schema.org-aligned CMS admin UI on PHP — no runtime dependencies.",
+    "type": "project",
+    "version": "0.1.0",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Eric Binek"
+        }
+    ],
+    "require": {
+        "php": ">=8.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Cms\\": "src/"
+        }
+    },
+    "scripts": {
+        "test": "php bin/test.php"
+    }
+}
