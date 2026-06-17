@@ -46,6 +46,13 @@ final class DetailView
         'cardinality' => 'one',
         'required' => false,
     ],
+    [
+        'name' => 'publisher',
+        'kind' => 'Ref',
+        'targets' => ['Organization'],
+        'cardinality' => 'one',
+        'required' => false,
+    ],
 ];
 
     public static function render(array $opts): array

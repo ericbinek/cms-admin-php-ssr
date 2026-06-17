@@ -68,6 +68,13 @@ final class CreateView
         'required' => false,
     ],
     [
+        'name' => 'worksFor',
+        'kind' => 'Ref',
+        'targets' => ['Organization'],
+        'cardinality' => 'one',
+        'required' => false,
+    ],
+    [
         'name' => 'jobTitle',
         'kind' => 'InlineScalar',
         'use' => 'Text',

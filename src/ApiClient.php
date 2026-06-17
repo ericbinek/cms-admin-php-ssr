@@ -15,14 +15,18 @@ final class ApiClient
     public const PLURALS = [
         'BlogPosting' => 'blog-postings',
         'Person' => 'persons',
+        'Organization' => 'organizations',
         'WebPage' => 'web-pages',
         'ImageObject' => 'image-objects',
+        'VideoObject' => 'video-objects',
+        'AudioObject' => 'audio-objects',
         'CategoryCode' => 'category-codes',
         'CategoryCodeSet' => 'category-code-sets',
         'DefinedTerm' => 'defined-terms',
         'DefinedTermSet' => 'defined-term-sets',
         'Comment' => 'comments',
         'WebSite' => 'web-sites',
+        'SiteNavigationElement' => 'site-navigation-elements',
     ];
 
     // The session bearer token, bound once per request by the server before any

@@ -1,25 +1,18 @@
 <?php
 declare(strict_types=1);
 
-namespace Cms\Views\BlogPosting;
+namespace Cms\Views\VideoObject;
 
 use Cms\ApiClient;
 use Cms\Views\Layout;
 
 final class CreateView
 {
-    public const ENTITY = 'BlogPosting';
-    public const BASE = '/blog-postings';
+    public const ENTITY = 'VideoObject';
+    public const BASE = '/video-objects';
     public const PROPERTIES = [
     [
-        'name' => 'headline',
-        'kind' => 'InlineScalar',
-        'use' => 'Text',
-        'cardinality' => 'one',
-        'required' => true,
-    ],
-    [
-        'name' => 'alternativeHeadline',
+        'name' => 'name',
         'kind' => 'InlineScalar',
         'use' => 'Text',
         'cardinality' => 'one',
@@ -33,114 +26,79 @@ final class CreateView
         'required' => false,
     ],
     [
-        'name' => 'articleBody',
+        'name' => 'contentUrl',
         'kind' => 'InlineScalar',
-        'use' => 'Text',
+        'use' => 'URL',
         'cardinality' => 'one',
         'required' => true,
     ],
     [
-        'name' => 'author',
-        'kind' => 'Ref',
-        'targets' => ['Person'],
-        'cardinality' => 'one',
-        'required' => true,
-    ],
-    [
-        'name' => 'publisher',
-        'kind' => 'Ref',
-        'targets' => ['Organization'],
-        'cardinality' => 'one',
-        'required' => false,
-    ],
-    [
-        'name' => 'image',
-        'kind' => 'Ref',
-        'targets' => ['ImageObject'],
-        'cardinality' => 'many',
-        'required' => false,
-    ],
-    [
-        'name' => 'video',
-        'kind' => 'Ref',
-        'targets' => ['VideoObject'],
-        'cardinality' => 'many',
-        'required' => false,
-    ],
-    [
-        'name' => 'audio',
-        'kind' => 'Ref',
-        'targets' => ['AudioObject'],
-        'cardinality' => 'many',
-        'required' => false,
-    ],
-    [
-        'name' => 'keywords',
-        'kind' => 'Ref',
-        'targets' => ['DefinedTerm'],
-        'cardinality' => 'many',
-        'required' => false,
-    ],
-    [
-        'name' => 'about',
-        'kind' => 'Ref',
-        'targets' => ['CategoryCode'],
-        'cardinality' => 'many',
-        'required' => false,
-    ],
-    [
-        'name' => 'datePublished',
-        'kind' => 'InlineScalar',
-        'use' => 'DateTime',
-        'cardinality' => 'one',
-        'required' => false,
-    ],
-    [
-        'name' => 'dateModified',
-        'kind' => 'InlineScalar',
-        'use' => 'DateTime',
-        'cardinality' => 'one',
-        'required' => false,
-    ],
-    [
-        'name' => 'dateCreated',
-        'kind' => 'InlineScalar',
-        'use' => 'DateTime',
-        'cardinality' => 'one',
-        'required' => false,
-    ],
-    [
-        'name' => 'url',
+        'name' => 'embedUrl',
         'kind' => 'InlineScalar',
         'use' => 'URL',
         'cardinality' => 'one',
         'required' => false,
     ],
     [
-        'name' => 'inLanguage',
-        'kind' => 'Embed',
-        'use' => 'Language',
-        'cardinality' => 'one',
-        'required' => false,
-    ],
-    [
-        'name' => 'isAccessibleForFree',
+        'name' => 'encodingFormat',
         'kind' => 'InlineScalar',
-        'use' => 'Boolean',
+        'use' => 'Text',
         'cardinality' => 'one',
         'required' => false,
     ],
     [
-        'name' => 'wordCount',
+        'name' => 'duration',
         'kind' => 'InlineScalar',
-        'use' => 'Integer',
+        'use' => 'Duration',
         'cardinality' => 'one',
         'required' => false,
     ],
     [
-        'name' => 'creativeWorkStatus',
-        'kind' => 'Enum',
-        'values' => ['Draft', 'Pending', 'Published', 'Archived'],
+        'name' => 'videoQuality',
+        'kind' => 'InlineScalar',
+        'use' => 'Text',
+        'cardinality' => 'one',
+        'required' => false,
+    ],
+    [
+        'name' => 'transcript',
+        'kind' => 'InlineScalar',
+        'use' => 'Text',
+        'cardinality' => 'one',
+        'required' => false,
+    ],
+    [
+        'name' => 'caption',
+        'kind' => 'InlineScalar',
+        'use' => 'Text',
+        'cardinality' => 'one',
+        'required' => false,
+    ],
+    [
+        'name' => 'uploadDate',
+        'kind' => 'InlineScalar',
+        'use' => 'DateTime',
+        'cardinality' => 'one',
+        'required' => false,
+    ],
+    [
+        'name' => 'creator',
+        'kind' => 'Ref',
+        'targets' => ['Person'],
+        'cardinality' => 'one',
+        'required' => false,
+    ],
+    [
+        'name' => 'thumbnail',
+        'kind' => 'Ref',
+        'targets' => ['ImageObject'],
+        'cardinality' => 'one',
+        'required' => false,
+    ],
+    [
+        'name' => 'productionCompany',
+        'kind' => 'Ref',
+        'targets' => ['Organization'],
         'cardinality' => 'one',
         'required' => false,
     ],

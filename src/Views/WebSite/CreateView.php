@@ -46,6 +46,13 @@ final class CreateView
         'cardinality' => 'one',
         'required' => false,
     ],
+    [
+        'name' => 'publisher',
+        'kind' => 'Ref',
+        'targets' => ['Organization'],
+        'cardinality' => 'one',
+        'required' => false,
+    ],
 ];
 
     private static function loadRefOptions(): array

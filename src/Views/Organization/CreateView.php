@@ -1,25 +1,25 @@
 <?php
 declare(strict_types=1);
 
-namespace Cms\Views\BlogPosting;
+namespace Cms\Views\Organization;
 
 use Cms\ApiClient;
 use Cms\Views\Layout;
 
 final class CreateView
 {
-    public const ENTITY = 'BlogPosting';
-    public const BASE = '/blog-postings';
+    public const ENTITY = 'Organization';
+    public const BASE = '/organizations';
     public const PROPERTIES = [
     [
-        'name' => 'headline',
+        'name' => 'name',
         'kind' => 'InlineScalar',
         'use' => 'Text',
         'cardinality' => 'one',
         'required' => true,
     ],
     [
-        'name' => 'alternativeHeadline',
+        'name' => 'legalName',
         'kind' => 'InlineScalar',
         'use' => 'Text',
         'cardinality' => 'one',
@@ -33,83 +33,6 @@ final class CreateView
         'required' => false,
     ],
     [
-        'name' => 'articleBody',
-        'kind' => 'InlineScalar',
-        'use' => 'Text',
-        'cardinality' => 'one',
-        'required' => true,
-    ],
-    [
-        'name' => 'author',
-        'kind' => 'Ref',
-        'targets' => ['Person'],
-        'cardinality' => 'one',
-        'required' => true,
-    ],
-    [
-        'name' => 'publisher',
-        'kind' => 'Ref',
-        'targets' => ['Organization'],
-        'cardinality' => 'one',
-        'required' => false,
-    ],
-    [
-        'name' => 'image',
-        'kind' => 'Ref',
-        'targets' => ['ImageObject'],
-        'cardinality' => 'many',
-        'required' => false,
-    ],
-    [
-        'name' => 'video',
-        'kind' => 'Ref',
-        'targets' => ['VideoObject'],
-        'cardinality' => 'many',
-        'required' => false,
-    ],
-    [
-        'name' => 'audio',
-        'kind' => 'Ref',
-        'targets' => ['AudioObject'],
-        'cardinality' => 'many',
-        'required' => false,
-    ],
-    [
-        'name' => 'keywords',
-        'kind' => 'Ref',
-        'targets' => ['DefinedTerm'],
-        'cardinality' => 'many',
-        'required' => false,
-    ],
-    [
-        'name' => 'about',
-        'kind' => 'Ref',
-        'targets' => ['CategoryCode'],
-        'cardinality' => 'many',
-        'required' => false,
-    ],
-    [
-        'name' => 'datePublished',
-        'kind' => 'InlineScalar',
-        'use' => 'DateTime',
-        'cardinality' => 'one',
-        'required' => false,
-    ],
-    [
-        'name' => 'dateModified',
-        'kind' => 'InlineScalar',
-        'use' => 'DateTime',
-        'cardinality' => 'one',
-        'required' => false,
-    ],
-    [
-        'name' => 'dateCreated',
-        'kind' => 'InlineScalar',
-        'use' => 'DateTime',
-        'cardinality' => 'one',
-        'required' => false,
-    ],
-    [
         'name' => 'url',
         'kind' => 'InlineScalar',
         'use' => 'URL',
@@ -117,30 +40,44 @@ final class CreateView
         'required' => false,
     ],
     [
-        'name' => 'inLanguage',
-        'kind' => 'Embed',
-        'use' => 'Language',
-        'cardinality' => 'one',
-        'required' => false,
-    ],
-    [
-        'name' => 'isAccessibleForFree',
+        'name' => 'email',
         'kind' => 'InlineScalar',
-        'use' => 'Boolean',
+        'use' => 'Text',
         'cardinality' => 'one',
         'required' => false,
     ],
     [
-        'name' => 'wordCount',
+        'name' => 'telephone',
         'kind' => 'InlineScalar',
-        'use' => 'Integer',
+        'use' => 'Text',
         'cardinality' => 'one',
         'required' => false,
     ],
     [
-        'name' => 'creativeWorkStatus',
-        'kind' => 'Enum',
-        'values' => ['Draft', 'Pending', 'Published', 'Archived'],
+        'name' => 'logo',
+        'kind' => 'Ref',
+        'targets' => ['ImageObject'],
+        'cardinality' => 'one',
+        'required' => false,
+    ],
+    [
+        'name' => 'foundingDate',
+        'kind' => 'InlineScalar',
+        'use' => 'Date',
+        'cardinality' => 'one',
+        'required' => false,
+    ],
+    [
+        'name' => 'sameAs',
+        'kind' => 'InlineScalar',
+        'use' => 'URL',
+        'cardinality' => 'many',
+        'required' => false,
+    ],
+    [
+        'name' => 'parentOrganization',
+        'kind' => 'Ref',
+        'targets' => ['Organization'],
         'cardinality' => 'one',
         'required' => false,
     ],

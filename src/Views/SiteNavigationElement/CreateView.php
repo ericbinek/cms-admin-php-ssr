@@ -1,29 +1,29 @@
 <?php
 declare(strict_types=1);
 
-namespace Cms\Views\BlogPosting;
+namespace Cms\Views\SiteNavigationElement;
 
 use Cms\ApiClient;
 use Cms\Views\Layout;
 
 final class CreateView
 {
-    public const ENTITY = 'BlogPosting';
-    public const BASE = '/blog-postings';
+    public const ENTITY = 'SiteNavigationElement';
+    public const BASE = '/site-navigation-elements';
     public const PROPERTIES = [
     [
-        'name' => 'headline',
+        'name' => 'name',
         'kind' => 'InlineScalar',
         'use' => 'Text',
         'cardinality' => 'one',
         'required' => true,
     ],
     [
-        'name' => 'alternativeHeadline',
+        'name' => 'url',
         'kind' => 'InlineScalar',
-        'use' => 'Text',
+        'use' => 'URL',
         'cardinality' => 'one',
-        'required' => false,
+        'required' => true,
     ],
     [
         'name' => 'description',
@@ -33,114 +33,16 @@ final class CreateView
         'required' => false,
     ],
     [
-        'name' => 'articleBody',
-        'kind' => 'InlineScalar',
-        'use' => 'Text',
-        'cardinality' => 'one',
-        'required' => true,
-    ],
-    [
-        'name' => 'author',
-        'kind' => 'Ref',
-        'targets' => ['Person'],
-        'cardinality' => 'one',
-        'required' => true,
-    ],
-    [
-        'name' => 'publisher',
-        'kind' => 'Ref',
-        'targets' => ['Organization'],
-        'cardinality' => 'one',
-        'required' => false,
-    ],
-    [
-        'name' => 'image',
-        'kind' => 'Ref',
-        'targets' => ['ImageObject'],
-        'cardinality' => 'many',
-        'required' => false,
-    ],
-    [
-        'name' => 'video',
-        'kind' => 'Ref',
-        'targets' => ['VideoObject'],
-        'cardinality' => 'many',
-        'required' => false,
-    ],
-    [
-        'name' => 'audio',
-        'kind' => 'Ref',
-        'targets' => ['AudioObject'],
-        'cardinality' => 'many',
-        'required' => false,
-    ],
-    [
-        'name' => 'keywords',
-        'kind' => 'Ref',
-        'targets' => ['DefinedTerm'],
-        'cardinality' => 'many',
-        'required' => false,
-    ],
-    [
-        'name' => 'about',
-        'kind' => 'Ref',
-        'targets' => ['CategoryCode'],
-        'cardinality' => 'many',
-        'required' => false,
-    ],
-    [
-        'name' => 'datePublished',
-        'kind' => 'InlineScalar',
-        'use' => 'DateTime',
-        'cardinality' => 'one',
-        'required' => false,
-    ],
-    [
-        'name' => 'dateModified',
-        'kind' => 'InlineScalar',
-        'use' => 'DateTime',
-        'cardinality' => 'one',
-        'required' => false,
-    ],
-    [
-        'name' => 'dateCreated',
-        'kind' => 'InlineScalar',
-        'use' => 'DateTime',
-        'cardinality' => 'one',
-        'required' => false,
-    ],
-    [
-        'name' => 'url',
-        'kind' => 'InlineScalar',
-        'use' => 'URL',
-        'cardinality' => 'one',
-        'required' => false,
-    ],
-    [
-        'name' => 'inLanguage',
-        'kind' => 'Embed',
-        'use' => 'Language',
-        'cardinality' => 'one',
-        'required' => false,
-    ],
-    [
-        'name' => 'isAccessibleForFree',
-        'kind' => 'InlineScalar',
-        'use' => 'Boolean',
-        'cardinality' => 'one',
-        'required' => false,
-    ],
-    [
-        'name' => 'wordCount',
+        'name' => 'position',
         'kind' => 'InlineScalar',
         'use' => 'Integer',
         'cardinality' => 'one',
         'required' => false,
     ],
     [
-        'name' => 'creativeWorkStatus',
-        'kind' => 'Enum',
-        'values' => ['Draft', 'Pending', 'Published', 'Archived'],
+        'name' => 'isPartOf',
+        'kind' => 'Ref',
+        'targets' => ['SiteNavigationElement'],
         'cardinality' => 'one',
         'required' => false,
     ],

@@ -1,15 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace Cms\Views\Person;
+namespace Cms\Views\Organization;
 
 use Cms\ApiClient;
 use Cms\Views\Layout;
 
 final class DetailView
 {
-    public const ENTITY = 'Person';
-    public const BASE = '/persons';
+    public const ENTITY = 'Organization';
+    public const BASE = '/organizations';
     public const PROPERTIES = [
     [
         'name' => 'name',
@@ -19,28 +19,14 @@ final class DetailView
         'required' => true,
     ],
     [
-        'name' => 'givenName',
+        'name' => 'legalName',
         'kind' => 'InlineScalar',
         'use' => 'Text',
         'cardinality' => 'one',
         'required' => false,
     ],
     [
-        'name' => 'familyName',
-        'kind' => 'InlineScalar',
-        'use' => 'Text',
-        'cardinality' => 'one',
-        'required' => false,
-    ],
-    [
-        'name' => 'alternateName',
-        'kind' => 'InlineScalar',
-        'use' => 'Text',
-        'cardinality' => 'one',
-        'required' => false,
-    ],
-    [
-        'name' => 'email',
+        'name' => 'description',
         'kind' => 'InlineScalar',
         'use' => 'Text',
         'cardinality' => 'one',
@@ -54,30 +40,30 @@ final class DetailView
         'required' => false,
     ],
     [
-        'name' => 'description',
+        'name' => 'email',
         'kind' => 'InlineScalar',
         'use' => 'Text',
         'cardinality' => 'one',
         'required' => false,
     ],
     [
-        'name' => 'image',
+        'name' => 'telephone',
+        'kind' => 'InlineScalar',
+        'use' => 'Text',
+        'cardinality' => 'one',
+        'required' => false,
+    ],
+    [
+        'name' => 'logo',
         'kind' => 'Ref',
         'targets' => ['ImageObject'],
         'cardinality' => 'one',
         'required' => false,
     ],
     [
-        'name' => 'worksFor',
-        'kind' => 'Ref',
-        'targets' => ['Organization'],
-        'cardinality' => 'one',
-        'required' => false,
-    ],
-    [
-        'name' => 'jobTitle',
+        'name' => 'foundingDate',
         'kind' => 'InlineScalar',
-        'use' => 'Text',
+        'use' => 'Date',
         'cardinality' => 'one',
         'required' => false,
     ],
@@ -86,6 +72,13 @@ final class DetailView
         'kind' => 'InlineScalar',
         'use' => 'URL',
         'cardinality' => 'many',
+        'required' => false,
+    ],
+    [
+        'name' => 'parentOrganization',
+        'kind' => 'Ref',
+        'targets' => ['Organization'],
+        'cardinality' => 'one',
         'required' => false,
     ],
 ];

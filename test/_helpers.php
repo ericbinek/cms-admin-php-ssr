@@ -4,14 +4,18 @@ declare(strict_types=1);
 const CMS_PLURALS = [
     'BlogPosting' => 'blog-postings',
     'Person' => 'persons',
+    'Organization' => 'organizations',
     'WebPage' => 'web-pages',
     'ImageObject' => 'image-objects',
+    'VideoObject' => 'video-objects',
+    'AudioObject' => 'audio-objects',
     'CategoryCode' => 'category-codes',
     'CategoryCodeSet' => 'category-code-sets',
     'DefinedTerm' => 'defined-terms',
     'DefinedTermSet' => 'defined-term-sets',
     'Comment' => 'comments',
     'WebSite' => 'web-sites',
+    'SiteNavigationElement' => 'site-navigation-elements',
 ];
 
 const CMS_SAMPLES = [
@@ -23,10 +27,19 @@ const CMS_SAMPLES = [
     'Person' => [
         'name' => 'sample',
     ],
+    'Organization' => [
+        'name' => 'sample',
+    ],
     'WebPage' => [
         'headline' => 'sample',
     ],
     'ImageObject' => [
+        'contentUrl' => 'https://example.com/x',
+    ],
+    'VideoObject' => [
+        'contentUrl' => 'https://example.com/x',
+    ],
+    'AudioObject' => [
         'contentUrl' => 'https://example.com/x',
     ],
     'CategoryCode' => [
@@ -54,9 +67,13 @@ const CMS_SAMPLES = [
         'name' => 'sample',
         'url' => 'https://example.com/x',
     ],
+    'SiteNavigationElement' => [
+        'name' => 'sample',
+        'url' => 'https://example.com/x',
+    ],
 ];
 
-const CMS_ENTITIES = ['BlogPosting', 'Person', 'WebPage', 'ImageObject', 'CategoryCode', 'CategoryCodeSet', 'DefinedTerm', 'DefinedTermSet', 'Comment', 'WebSite'];
+const CMS_ENTITIES = ['BlogPosting', 'Person', 'Organization', 'WebPage', 'ImageObject', 'VideoObject', 'AudioObject', 'CategoryCode', 'CategoryCodeSet', 'DefinedTerm', 'DefinedTermSet', 'Comment', 'WebSite', 'SiteNavigationElement'];
 
 // Cookie names the admin server sets — kept in sync with src/Auth.php.
 const CMS_SESSION_COOKIE = 'cms_session';
@@ -66,6 +83,19 @@ const CMS_ADMIN_USERNAME = 'admin';
 const CMS_ADMIN_PASSWORD = 'admin-password';
 
 $CMS_SEEDED = [];
+
+function cms_free_port(): int
+{
+    // Ask the OS for a free port instead of guessing one. Tests run in
+    // parallel; a guessed port from a fixed range collides (EADDRINUSE).
+    $sock = @stream_socket_server('tcp://127.0.0.1:0', $errno, $errstr);
+    if ($sock === false) {
+        throw new RuntimeException("Cannot allocate a free port: $errstr ($errno)");
+    }
+    $name = stream_socket_get_name($sock, false);
+    fclose($sock);
+    return (int) substr($name, strrpos($name, ':') + 1);
+}
 
 function cms_start_php_server(string $script, int $port, array $env, ?string $docRoot = null): array
 {
@@ -118,7 +148,7 @@ function cms_start_stack(): array
     $mockDataDir = sys_get_temp_dir() . '/cms-admin-mock-data-' . bin2hex(random_bytes(4));
     @mkdir($mockDataDir, 0755, true);
 
-    $mockPort = 15000 + random_int(0, 1000);
+    $mockPort = cms_free_port();
     $mock = cms_start_php_server(
         $repoRoot . '/test/_mock_api.php',
         $mockPort,
@@ -126,7 +156,7 @@ function cms_start_stack(): array
         $mockDocroot,
     );
 
-    $adminPort = 16000 + random_int(0, 1000);
+    $adminPort = cms_free_port();
     $admin = cms_start_php_server(
         $repoRoot . '/src/server.php',
         $adminPort,

@@ -1,15 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace Cms\Views\Person;
+namespace Cms\Views\SiteNavigationElement;
 
 use Cms\ApiClient;
 use Cms\Views\Layout;
 
 final class DetailView
 {
-    public const ENTITY = 'Person';
-    public const BASE = '/persons';
+    public const ENTITY = 'SiteNavigationElement';
+    public const BASE = '/site-navigation-elements';
     public const PROPERTIES = [
     [
         'name' => 'name',
@@ -19,39 +19,11 @@ final class DetailView
         'required' => true,
     ],
     [
-        'name' => 'givenName',
-        'kind' => 'InlineScalar',
-        'use' => 'Text',
-        'cardinality' => 'one',
-        'required' => false,
-    ],
-    [
-        'name' => 'familyName',
-        'kind' => 'InlineScalar',
-        'use' => 'Text',
-        'cardinality' => 'one',
-        'required' => false,
-    ],
-    [
-        'name' => 'alternateName',
-        'kind' => 'InlineScalar',
-        'use' => 'Text',
-        'cardinality' => 'one',
-        'required' => false,
-    ],
-    [
-        'name' => 'email',
-        'kind' => 'InlineScalar',
-        'use' => 'Text',
-        'cardinality' => 'one',
-        'required' => false,
-    ],
-    [
         'name' => 'url',
         'kind' => 'InlineScalar',
         'use' => 'URL',
         'cardinality' => 'one',
-        'required' => false,
+        'required' => true,
     ],
     [
         'name' => 'description',
@@ -61,31 +33,17 @@ final class DetailView
         'required' => false,
     ],
     [
-        'name' => 'image',
-        'kind' => 'Ref',
-        'targets' => ['ImageObject'],
-        'cardinality' => 'one',
-        'required' => false,
-    ],
-    [
-        'name' => 'worksFor',
-        'kind' => 'Ref',
-        'targets' => ['Organization'],
-        'cardinality' => 'one',
-        'required' => false,
-    ],
-    [
-        'name' => 'jobTitle',
+        'name' => 'position',
         'kind' => 'InlineScalar',
-        'use' => 'Text',
+        'use' => 'Integer',
         'cardinality' => 'one',
         'required' => false,
     ],
     [
-        'name' => 'sameAs',
-        'kind' => 'InlineScalar',
-        'use' => 'URL',
-        'cardinality' => 'many',
+        'name' => 'isPartOf',
+        'kind' => 'Ref',
+        'targets' => ['SiteNavigationElement'],
+        'cardinality' => 'one',
         'required' => false,
     ],
 ];

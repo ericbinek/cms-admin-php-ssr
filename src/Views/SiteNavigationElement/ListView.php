@@ -1,20 +1,27 @@
 <?php
 declare(strict_types=1);
 
-namespace Cms\Views\WebSite;
+namespace Cms\Views\SiteNavigationElement;
 
 use Cms\ApiClient;
 use Cms\Views\Layout;
 
 final class ListView
 {
-    public const ENTITY = 'WebSite';
-    public const BASE = '/web-sites';
+    public const ENTITY = 'SiteNavigationElement';
+    public const BASE = '/site-navigation-elements';
     public const PROPERTIES = [
     [
         'name' => 'name',
         'kind' => 'InlineScalar',
         'use' => 'Text',
+        'cardinality' => 'one',
+        'required' => true,
+    ],
+    [
+        'name' => 'url',
+        'kind' => 'InlineScalar',
+        'use' => 'URL',
         'cardinality' => 'one',
         'required' => true,
     ],
@@ -26,30 +33,16 @@ final class ListView
         'required' => false,
     ],
     [
-        'name' => 'url',
+        'name' => 'position',
         'kind' => 'InlineScalar',
-        'use' => 'URL',
-        'cardinality' => 'one',
-        'required' => true,
-    ],
-    [
-        'name' => 'inLanguage',
-        'kind' => 'Embed',
-        'use' => 'Language',
+        'use' => 'Integer',
         'cardinality' => 'one',
         'required' => false,
     ],
     [
-        'name' => 'image',
+        'name' => 'isPartOf',
         'kind' => 'Ref',
-        'targets' => ['ImageObject'],
-        'cardinality' => 'one',
-        'required' => false,
-    ],
-    [
-        'name' => 'publisher',
-        'kind' => 'Ref',
-        'targets' => ['Organization'],
+        'targets' => ['SiteNavigationElement'],
         'cardinality' => 'one',
         'required' => false,
     ],

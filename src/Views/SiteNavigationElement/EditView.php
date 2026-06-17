@@ -1,29 +1,29 @@
 <?php
 declare(strict_types=1);
 
-namespace Cms\Views\BlogPosting;
+namespace Cms\Views\SiteNavigationElement;
 
 use Cms\ApiClient;
 use Cms\Views\Layout;
 
-final class CreateView
+final class EditView
 {
-    public const ENTITY = 'BlogPosting';
-    public const BASE = '/blog-postings';
+    public const ENTITY = 'SiteNavigationElement';
+    public const BASE = '/site-navigation-elements';
     public const PROPERTIES = [
     [
-        'name' => 'headline',
+        'name' => 'name',
         'kind' => 'InlineScalar',
         'use' => 'Text',
         'cardinality' => 'one',
         'required' => true,
     ],
     [
-        'name' => 'alternativeHeadline',
+        'name' => 'url',
         'kind' => 'InlineScalar',
-        'use' => 'Text',
+        'use' => 'URL',
         'cardinality' => 'one',
-        'required' => false,
+        'required' => true,
     ],
     [
         'name' => 'description',
@@ -33,114 +33,16 @@ final class CreateView
         'required' => false,
     ],
     [
-        'name' => 'articleBody',
-        'kind' => 'InlineScalar',
-        'use' => 'Text',
-        'cardinality' => 'one',
-        'required' => true,
-    ],
-    [
-        'name' => 'author',
-        'kind' => 'Ref',
-        'targets' => ['Person'],
-        'cardinality' => 'one',
-        'required' => true,
-    ],
-    [
-        'name' => 'publisher',
-        'kind' => 'Ref',
-        'targets' => ['Organization'],
-        'cardinality' => 'one',
-        'required' => false,
-    ],
-    [
-        'name' => 'image',
-        'kind' => 'Ref',
-        'targets' => ['ImageObject'],
-        'cardinality' => 'many',
-        'required' => false,
-    ],
-    [
-        'name' => 'video',
-        'kind' => 'Ref',
-        'targets' => ['VideoObject'],
-        'cardinality' => 'many',
-        'required' => false,
-    ],
-    [
-        'name' => 'audio',
-        'kind' => 'Ref',
-        'targets' => ['AudioObject'],
-        'cardinality' => 'many',
-        'required' => false,
-    ],
-    [
-        'name' => 'keywords',
-        'kind' => 'Ref',
-        'targets' => ['DefinedTerm'],
-        'cardinality' => 'many',
-        'required' => false,
-    ],
-    [
-        'name' => 'about',
-        'kind' => 'Ref',
-        'targets' => ['CategoryCode'],
-        'cardinality' => 'many',
-        'required' => false,
-    ],
-    [
-        'name' => 'datePublished',
-        'kind' => 'InlineScalar',
-        'use' => 'DateTime',
-        'cardinality' => 'one',
-        'required' => false,
-    ],
-    [
-        'name' => 'dateModified',
-        'kind' => 'InlineScalar',
-        'use' => 'DateTime',
-        'cardinality' => 'one',
-        'required' => false,
-    ],
-    [
-        'name' => 'dateCreated',
-        'kind' => 'InlineScalar',
-        'use' => 'DateTime',
-        'cardinality' => 'one',
-        'required' => false,
-    ],
-    [
-        'name' => 'url',
-        'kind' => 'InlineScalar',
-        'use' => 'URL',
-        'cardinality' => 'one',
-        'required' => false,
-    ],
-    [
-        'name' => 'inLanguage',
-        'kind' => 'Embed',
-        'use' => 'Language',
-        'cardinality' => 'one',
-        'required' => false,
-    ],
-    [
-        'name' => 'isAccessibleForFree',
-        'kind' => 'InlineScalar',
-        'use' => 'Boolean',
-        'cardinality' => 'one',
-        'required' => false,
-    ],
-    [
-        'name' => 'wordCount',
+        'name' => 'position',
         'kind' => 'InlineScalar',
         'use' => 'Integer',
         'cardinality' => 'one',
         'required' => false,
     ],
     [
-        'name' => 'creativeWorkStatus',
-        'kind' => 'Enum',
-        'values' => ['Draft', 'Pending', 'Published', 'Archived'],
+        'name' => 'isPartOf',
+        'kind' => 'Ref',
+        'targets' => ['SiteNavigationElement'],
         'cardinality' => 'one',
         'required' => false,
     ],
@@ -175,11 +77,18 @@ final class CreateView
 
     public static function renderForm(array $opts): array
     {
+        $id = $opts['id'];
         $user = $opts['user'] ?? null;
         $csrf = $opts['csrf'] ?? null;
-        $values = $opts['values'] ?? [];
+        $values = $opts['values'] ?? null;
         $errors = $opts['errors'] ?? [];
         $fieldErrors = $opts['fieldErrors'] ?? [];
+        if ($values === null) {
+            $r = ApiClient::get(self::ENTITY, $id);
+            if ($r['status'] === 404) return Layout::errorPage(404, self::ENTITY . ' not found.', $user);
+            if ($r['status'] !== 200) return Layout::errorPage($r['status'], $r['body']['message'] ?? 'Failed to load.', $user);
+            $values = Layout::formValuesFromItem($r['body'], self::PROPERTIES);
+        }
         $refOptions = self::loadRefOptions();
         $fields = '';
         foreach (self::PROPERTIES as $p) {
@@ -198,16 +107,16 @@ final class CreateView
         return [
             'status' => count($errors) ? 400 : 200,
             'html' => Layout::layout([
-                'title' => 'New ' . self::ENTITY,
+                'title' => 'Edit ' . self::ENTITY,
                 'currentEntity' => self::ENTITY,
                 'user' => $user,
                 'csrf' => $csrf,
                 'body' => '
 ' . $errorBlock . '
-<form method="POST" action="' . self::BASE . '/new">
+<form method="POST" action="' . self::BASE . '/' . Layout::escapeHtml($id) . '/edit">
 ' . Layout::csrfField($csrf) . '
 ' . $fields . '
-<p><button type="submit">Create</button> · <a href="' . self::BASE . '">Cancel</a></p>
+<p><button type="submit">Save</button> · <a href="' . self::BASE . '/' . Layout::escapeHtml($id) . '">Cancel</a></p>
 </form>',
             ]),
         ];
@@ -215,11 +124,14 @@ final class CreateView
 
     public static function handleSubmit(array $opts): array
     {
+        $id = $opts['id'];
+        $user = $opts['user'] ?? null;
         $payload = Layout::parseFormBody($opts['form'] ?? '', self::PROPERTIES);
-        $r = ApiClient::create(self::ENTITY, $payload);
-        if ($r['status'] === 201 && isset($r['body']['id'])) {
-            return ['status' => 303, 'redirect' => self::BASE . '/' . $r['body']['id']];
+        $r = ApiClient::update(self::ENTITY, $id, $payload);
+        if ($r['status'] === 200) {
+            return ['status' => 303, 'redirect' => self::BASE . '/' . $id];
         }
+        if ($r['status'] === 404) return Layout::errorPage(404, self::ENTITY . ' not found.', $user);
         return ['status' => 400, 'errors' => self::extractErrorList($r['body']), 'values' => $payload];
     }
 }

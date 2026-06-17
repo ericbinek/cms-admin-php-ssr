@@ -21,6 +21,11 @@ use Cms\Views\Person\DetailView as PersonDetail;
 use Cms\Views\Person\CreateView as PersonCreate;
 use Cms\Views\Person\EditView as PersonEdit;
 use Cms\Views\Person\DeleteView as PersonDelete;
+use Cms\Views\Organization\ListView as OrganizationList;
+use Cms\Views\Organization\DetailView as OrganizationDetail;
+use Cms\Views\Organization\CreateView as OrganizationCreate;
+use Cms\Views\Organization\EditView as OrganizationEdit;
+use Cms\Views\Organization\DeleteView as OrganizationDelete;
 use Cms\Views\WebPage\ListView as WebPageList;
 use Cms\Views\WebPage\DetailView as WebPageDetail;
 use Cms\Views\WebPage\CreateView as WebPageCreate;
@@ -31,6 +36,16 @@ use Cms\Views\ImageObject\DetailView as ImageObjectDetail;
 use Cms\Views\ImageObject\CreateView as ImageObjectCreate;
 use Cms\Views\ImageObject\EditView as ImageObjectEdit;
 use Cms\Views\ImageObject\DeleteView as ImageObjectDelete;
+use Cms\Views\VideoObject\ListView as VideoObjectList;
+use Cms\Views\VideoObject\DetailView as VideoObjectDetail;
+use Cms\Views\VideoObject\CreateView as VideoObjectCreate;
+use Cms\Views\VideoObject\EditView as VideoObjectEdit;
+use Cms\Views\VideoObject\DeleteView as VideoObjectDelete;
+use Cms\Views\AudioObject\ListView as AudioObjectList;
+use Cms\Views\AudioObject\DetailView as AudioObjectDetail;
+use Cms\Views\AudioObject\CreateView as AudioObjectCreate;
+use Cms\Views\AudioObject\EditView as AudioObjectEdit;
+use Cms\Views\AudioObject\DeleteView as AudioObjectDelete;
 use Cms\Views\CategoryCode\ListView as CategoryCodeList;
 use Cms\Views\CategoryCode\DetailView as CategoryCodeDetail;
 use Cms\Views\CategoryCode\CreateView as CategoryCodeCreate;
@@ -61,20 +76,29 @@ use Cms\Views\WebSite\DetailView as WebSiteDetail;
 use Cms\Views\WebSite\CreateView as WebSiteCreate;
 use Cms\Views\WebSite\EditView as WebSiteEdit;
 use Cms\Views\WebSite\DeleteView as WebSiteDelete;
+use Cms\Views\SiteNavigationElement\ListView as SiteNavigationElementList;
+use Cms\Views\SiteNavigationElement\DetailView as SiteNavigationElementDetail;
+use Cms\Views\SiteNavigationElement\CreateView as SiteNavigationElementCreate;
+use Cms\Views\SiteNavigationElement\EditView as SiteNavigationElementEdit;
+use Cms\Views\SiteNavigationElement\DeleteView as SiteNavigationElementDelete;
 
 const UUID_PATTERN = '/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i';
 
 $ENTITY_ROUTES = [
     ['BlogPosting', 'blog-postings', BlogPostingList::class, BlogPostingDetail::class, BlogPostingCreate::class, BlogPostingEdit::class, BlogPostingDelete::class],
     ['Person', 'persons', PersonList::class, PersonDetail::class, PersonCreate::class, PersonEdit::class, PersonDelete::class],
+    ['Organization', 'organizations', OrganizationList::class, OrganizationDetail::class, OrganizationCreate::class, OrganizationEdit::class, OrganizationDelete::class],
     ['WebPage', 'web-pages', WebPageList::class, WebPageDetail::class, WebPageCreate::class, WebPageEdit::class, WebPageDelete::class],
     ['ImageObject', 'image-objects', ImageObjectList::class, ImageObjectDetail::class, ImageObjectCreate::class, ImageObjectEdit::class, ImageObjectDelete::class],
+    ['VideoObject', 'video-objects', VideoObjectList::class, VideoObjectDetail::class, VideoObjectCreate::class, VideoObjectEdit::class, VideoObjectDelete::class],
+    ['AudioObject', 'audio-objects', AudioObjectList::class, AudioObjectDetail::class, AudioObjectCreate::class, AudioObjectEdit::class, AudioObjectDelete::class],
     ['CategoryCode', 'category-codes', CategoryCodeList::class, CategoryCodeDetail::class, CategoryCodeCreate::class, CategoryCodeEdit::class, CategoryCodeDelete::class],
     ['CategoryCodeSet', 'category-code-sets', CategoryCodeSetList::class, CategoryCodeSetDetail::class, CategoryCodeSetCreate::class, CategoryCodeSetEdit::class, CategoryCodeSetDelete::class],
     ['DefinedTerm', 'defined-terms', DefinedTermList::class, DefinedTermDetail::class, DefinedTermCreate::class, DefinedTermEdit::class, DefinedTermDelete::class],
     ['DefinedTermSet', 'defined-term-sets', DefinedTermSetList::class, DefinedTermSetDetail::class, DefinedTermSetCreate::class, DefinedTermSetEdit::class, DefinedTermSetDelete::class],
     ['Comment', 'comments', CommentList::class, CommentDetail::class, CommentCreate::class, CommentEdit::class, CommentDelete::class],
     ['WebSite', 'web-sites', WebSiteList::class, WebSiteDetail::class, WebSiteCreate::class, WebSiteEdit::class, WebSiteDelete::class],
+    ['SiteNavigationElement', 'site-navigation-elements', SiteNavigationElementList::class, SiteNavigationElementDetail::class, SiteNavigationElementCreate::class, SiteNavigationElementEdit::class, SiteNavigationElementDelete::class],
 ];
 
 $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';

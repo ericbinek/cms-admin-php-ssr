@@ -1,55 +1,20 @@
 <?php
 declare(strict_types=1);
 
-namespace Cms\Views\Person;
+namespace Cms\Views\AudioObject;
 
 use Cms\ApiClient;
 use Cms\Views\Layout;
 
 final class DetailView
 {
-    public const ENTITY = 'Person';
-    public const BASE = '/persons';
+    public const ENTITY = 'AudioObject';
+    public const BASE = '/audio-objects';
     public const PROPERTIES = [
     [
         'name' => 'name',
         'kind' => 'InlineScalar',
         'use' => 'Text',
-        'cardinality' => 'one',
-        'required' => true,
-    ],
-    [
-        'name' => 'givenName',
-        'kind' => 'InlineScalar',
-        'use' => 'Text',
-        'cardinality' => 'one',
-        'required' => false,
-    ],
-    [
-        'name' => 'familyName',
-        'kind' => 'InlineScalar',
-        'use' => 'Text',
-        'cardinality' => 'one',
-        'required' => false,
-    ],
-    [
-        'name' => 'alternateName',
-        'kind' => 'InlineScalar',
-        'use' => 'Text',
-        'cardinality' => 'one',
-        'required' => false,
-    ],
-    [
-        'name' => 'email',
-        'kind' => 'InlineScalar',
-        'use' => 'Text',
-        'cardinality' => 'one',
-        'required' => false,
-    ],
-    [
-        'name' => 'url',
-        'kind' => 'InlineScalar',
-        'use' => 'URL',
         'cardinality' => 'one',
         'required' => false,
     ],
@@ -61,31 +26,59 @@ final class DetailView
         'required' => false,
     ],
     [
-        'name' => 'image',
-        'kind' => 'Ref',
-        'targets' => ['ImageObject'],
+        'name' => 'contentUrl',
+        'kind' => 'InlineScalar',
+        'use' => 'URL',
         'cardinality' => 'one',
-        'required' => false,
+        'required' => true,
     ],
     [
-        'name' => 'worksFor',
-        'kind' => 'Ref',
-        'targets' => ['Organization'],
-        'cardinality' => 'one',
-        'required' => false,
-    ],
-    [
-        'name' => 'jobTitle',
+        'name' => 'encodingFormat',
         'kind' => 'InlineScalar',
         'use' => 'Text',
         'cardinality' => 'one',
         'required' => false,
     ],
     [
-        'name' => 'sameAs',
+        'name' => 'duration',
         'kind' => 'InlineScalar',
-        'use' => 'URL',
-        'cardinality' => 'many',
+        'use' => 'Duration',
+        'cardinality' => 'one',
+        'required' => false,
+    ],
+    [
+        'name' => 'transcript',
+        'kind' => 'InlineScalar',
+        'use' => 'Text',
+        'cardinality' => 'one',
+        'required' => false,
+    ],
+    [
+        'name' => 'uploadDate',
+        'kind' => 'InlineScalar',
+        'use' => 'DateTime',
+        'cardinality' => 'one',
+        'required' => false,
+    ],
+    [
+        'name' => 'creator',
+        'kind' => 'Ref',
+        'targets' => ['Person'],
+        'cardinality' => 'one',
+        'required' => false,
+    ],
+    [
+        'name' => 'thumbnail',
+        'kind' => 'Ref',
+        'targets' => ['ImageObject'],
+        'cardinality' => 'one',
+        'required' => false,
+    ],
+    [
+        'name' => 'productionCompany',
+        'kind' => 'Ref',
+        'targets' => ['Organization'],
+        'cardinality' => 'one',
         'required' => false,
     ],
 ];

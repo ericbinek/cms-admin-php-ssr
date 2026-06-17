@@ -40,6 +40,13 @@ final class DetailView
         'required' => false,
     ],
     [
+        'name' => 'publisher',
+        'kind' => 'Ref',
+        'targets' => ['Organization'],
+        'cardinality' => 'one',
+        'required' => false,
+    ],
+    [
         'name' => 'primaryImageOfPage',
         'kind' => 'Ref',
         'targets' => ['ImageObject'],
@@ -49,7 +56,7 @@ final class DetailView
     [
         'name' => 'isPartOf',
         'kind' => 'Ref',
-        'targets' => ['WebPage'],
+        'targets' => ['WebSite'],
         'cardinality' => 'one',
         'required' => false,
     ],

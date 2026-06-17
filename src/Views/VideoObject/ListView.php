@@ -1,22 +1,22 @@
 <?php
 declare(strict_types=1);
 
-namespace Cms\Views\WebSite;
+namespace Cms\Views\VideoObject;
 
 use Cms\ApiClient;
 use Cms\Views\Layout;
 
 final class ListView
 {
-    public const ENTITY = 'WebSite';
-    public const BASE = '/web-sites';
+    public const ENTITY = 'VideoObject';
+    public const BASE = '/video-objects';
     public const PROPERTIES = [
     [
         'name' => 'name',
         'kind' => 'InlineScalar',
         'use' => 'Text',
         'cardinality' => 'one',
-        'required' => true,
+        'required' => false,
     ],
     [
         'name' => 'description',
@@ -26,35 +26,84 @@ final class ListView
         'required' => false,
     ],
     [
-        'name' => 'url',
+        'name' => 'contentUrl',
         'kind' => 'InlineScalar',
         'use' => 'URL',
         'cardinality' => 'one',
         'required' => true,
     ],
     [
-        'name' => 'inLanguage',
-        'kind' => 'Embed',
-        'use' => 'Language',
+        'name' => 'embedUrl',
+        'kind' => 'InlineScalar',
+        'use' => 'URL',
         'cardinality' => 'one',
         'required' => false,
     ],
     [
-        'name' => 'image',
+        'name' => 'encodingFormat',
+        'kind' => 'InlineScalar',
+        'use' => 'Text',
+        'cardinality' => 'one',
+        'required' => false,
+    ],
+    [
+        'name' => 'duration',
+        'kind' => 'InlineScalar',
+        'use' => 'Duration',
+        'cardinality' => 'one',
+        'required' => false,
+    ],
+    [
+        'name' => 'videoQuality',
+        'kind' => 'InlineScalar',
+        'use' => 'Text',
+        'cardinality' => 'one',
+        'required' => false,
+    ],
+    [
+        'name' => 'transcript',
+        'kind' => 'InlineScalar',
+        'use' => 'Text',
+        'cardinality' => 'one',
+        'required' => false,
+    ],
+    [
+        'name' => 'caption',
+        'kind' => 'InlineScalar',
+        'use' => 'Text',
+        'cardinality' => 'one',
+        'required' => false,
+    ],
+    [
+        'name' => 'uploadDate',
+        'kind' => 'InlineScalar',
+        'use' => 'DateTime',
+        'cardinality' => 'one',
+        'required' => false,
+    ],
+    [
+        'name' => 'creator',
+        'kind' => 'Ref',
+        'targets' => ['Person'],
+        'cardinality' => 'one',
+        'required' => false,
+    ],
+    [
+        'name' => 'thumbnail',
         'kind' => 'Ref',
         'targets' => ['ImageObject'],
         'cardinality' => 'one',
         'required' => false,
     ],
     [
-        'name' => 'publisher',
+        'name' => 'productionCompany',
         'kind' => 'Ref',
         'targets' => ['Organization'],
         'cardinality' => 'one',
         'required' => false,
     ],
 ];
-    public const EXTRA_COLS = ['url'];
+    public const EXTRA_COLS = ['contentUrl'];
 
     public static function render(array $opts): array
     {

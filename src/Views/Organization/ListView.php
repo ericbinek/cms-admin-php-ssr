@@ -1,15 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace Cms\Views\WebSite;
+namespace Cms\Views\Organization;
 
 use Cms\ApiClient;
 use Cms\Views\Layout;
 
 final class ListView
 {
-    public const ENTITY = 'WebSite';
-    public const BASE = '/web-sites';
+    public const ENTITY = 'Organization';
+    public const BASE = '/organizations';
     public const PROPERTIES = [
     [
         'name' => 'name',
@@ -17,6 +17,13 @@ final class ListView
         'use' => 'Text',
         'cardinality' => 'one',
         'required' => true,
+    ],
+    [
+        'name' => 'legalName',
+        'kind' => 'InlineScalar',
+        'use' => 'Text',
+        'cardinality' => 'one',
+        'required' => false,
     ],
     [
         'name' => 'description',
@@ -30,24 +37,45 @@ final class ListView
         'kind' => 'InlineScalar',
         'use' => 'URL',
         'cardinality' => 'one',
-        'required' => true,
+        'required' => false,
     ],
     [
-        'name' => 'inLanguage',
-        'kind' => 'Embed',
-        'use' => 'Language',
+        'name' => 'email',
+        'kind' => 'InlineScalar',
+        'use' => 'Text',
         'cardinality' => 'one',
         'required' => false,
     ],
     [
-        'name' => 'image',
+        'name' => 'telephone',
+        'kind' => 'InlineScalar',
+        'use' => 'Text',
+        'cardinality' => 'one',
+        'required' => false,
+    ],
+    [
+        'name' => 'logo',
         'kind' => 'Ref',
         'targets' => ['ImageObject'],
         'cardinality' => 'one',
         'required' => false,
     ],
     [
-        'name' => 'publisher',
+        'name' => 'foundingDate',
+        'kind' => 'InlineScalar',
+        'use' => 'Date',
+        'cardinality' => 'one',
+        'required' => false,
+    ],
+    [
+        'name' => 'sameAs',
+        'kind' => 'InlineScalar',
+        'use' => 'URL',
+        'cardinality' => 'many',
+        'required' => false,
+    ],
+    [
+        'name' => 'parentOrganization',
         'kind' => 'Ref',
         'targets' => ['Organization'],
         'cardinality' => 'one',
