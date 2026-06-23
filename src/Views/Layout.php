@@ -41,8 +41,6 @@ final class Layout
         'SiteNavigationElement' => ['name'],
     ];
 
-    private const LONG_TEXT_HINT = ['articleBody', 'description', 'text'];
-
     public static function pluralOf(string $entity): string
     {
         return self::PLURALS[$entity] ?? strtolower($entity) . 's';
@@ -208,6 +206,7 @@ final class Layout
     private static function renderInput(array $prop, mixed $value, string $id, string $requiredAttr, string $ariaInvalid, array $refOptions): string
     {
         $name = self::escapeHtml($prop['name']);
+        $maxLengthAttr = isset($prop['maxLength']) ? ' maxlength="' . $prop['maxLength'] . '"' : '';
         if ($prop['kind'] === 'Enum') {
             $opts = '';
             foreach ($prop['values'] as $v) {
@@ -240,11 +239,11 @@ final class Layout
             $v = is_array($value) ? implode("\n", $value) : ($value ?? '');
             return '<textarea id="' . $id . '" name="' . $name . '" rows="3"' . $requiredAttr . $ariaInvalid . '>' . self::escapeHtml($v) . '</textarea>';
         }
-        if ($prop['use'] === 'Text' && in_array($prop['name'], self::LONG_TEXT_HINT, true)) {
-            return '<textarea id="' . $id . '" name="' . $name . '" rows="6"' . $requiredAttr . $ariaInvalid . '>' . self::escapeHtml($value) . '</textarea>';
+        if ($prop['use'] === 'Text' && ($prop['multiline'] ?? false)) {
+            return '<textarea id="' . $id . '" name="' . $name . '" rows="6"' . $maxLengthAttr . $requiredAttr . $ariaInvalid . '>' . self::escapeHtml($value) . '</textarea>';
         }
         if ($prop['use'] === 'URL') {
-            return '<input id="' . $id . '" name="' . $name . '" type="url" value="' . self::escapeHtml($value) . '"' . $requiredAttr . $ariaInvalid . '>';
+            return '<input id="' . $id . '" name="' . $name . '" type="url" value="' . self::escapeHtml($value) . '"' . $maxLengthAttr . $requiredAttr . $ariaInvalid . '>';
         }
         if ($prop['use'] === 'Integer') {
             return '<input id="' . $id . '" name="' . $name . '" type="number" step="1" value="' . self::escapeHtml($value) . '"' . $requiredAttr . $ariaInvalid . '>';
@@ -260,7 +259,7 @@ final class Layout
             $v = is_string($value) ? substr(rtrim($value, 'Z'), 0, 16) : '';
             return '<input id="' . $id . '" name="' . $name . '" type="datetime-local" value="' . self::escapeHtml($v) . '"' . $requiredAttr . $ariaInvalid . '>';
         }
-        return '<input id="' . $id . '" name="' . $name . '" type="text" value="' . self::escapeHtml($value) . '"' . $requiredAttr . $ariaInvalid . '>';
+        return '<input id="' . $id . '" name="' . $name . '" type="text" value="' . self::escapeHtml($value) . '"' . $maxLengthAttr . $requiredAttr . $ariaInvalid . '>';
     }
 
     private static function parseFormPairs(string $raw): array

@@ -15,6 +15,8 @@ final class CreateView
         'name' => 'text',
         'kind' => 'InlineScalar',
         'use' => 'Text',
+        'maxLength' => 10000,
+        'multiline' => true,
         'cardinality' => 'one',
         'required' => true,
     ],
