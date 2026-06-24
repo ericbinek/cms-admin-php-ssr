@@ -121,7 +121,7 @@ final class DetailView
         'use' => 'URL',
         'maxLength' => 2048,
         'cardinality' => 'one',
-        'required' => false,
+        'required' => true,
     ],
     [
         'name' => 'inLanguage',

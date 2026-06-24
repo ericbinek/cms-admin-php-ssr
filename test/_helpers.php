@@ -23,6 +23,7 @@ const CMS_SAMPLES = [
         'headline' => 'sample',
         'articleBody' => 'sample',
         'author' => ['__ref' => 'Person'],
+        'url' => 'https://example.com/x',
     ],
     'Person' => [
         'name' => 'sample',
